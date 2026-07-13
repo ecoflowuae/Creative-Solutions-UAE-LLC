@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 150" width="640" height="150" role="img" aria-label="Creative Solutions Equipment Trading LLC">
+  <defs>
+    <linearGradient id="drop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6DB7F2"/>
+      <stop offset="0.5" stop-color="#1E74CE"/>
+      <stop offset="1" stop-color="#0E4C9E"/>
+    </linearGradient>
+    <linearGradient id="pump" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D2DAE3"/>
+      <stop offset="1" stop-color="#8492A2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- mark -->
+  <g transform="translate(6 16)">
+    <g transform="translate(40 86)">
+      <circle r="24" fill="none" stroke="#0C2C63" stroke-width="12" stroke-dasharray="8.4 9.4"/>
+      <circle r="18" fill="#0C2C63"/>
+      <circle r="7" fill="#ffffff"/>
+    </g>
+    <path d="M70 12 C50 43 33 60 33 83 A37 37 0 0 0 107 83 C107 60 90 43 70 12 Z" fill="#ffffff" stroke="url(#drop)" stroke-width="6.5"/>
+    <rect x="63" y="42" width="15" height="30" rx="2.5" fill="url(#pump)"/>
+    <rect x="58" y="45" width="25" height="6.5" rx="2" fill="#6C7A89"/>
+    <rect x="66" y="36" width="9" height="8" rx="1.5" fill="#6C7A89"/>
+    <circle cx="70.5" cy="83" r="18.5" fill="url(#pump)"/>
+    <g fill="#0C2C63">
+      <g id="bl"><path d="M70.5 83 C72 74 78 70.5 85 71.5 C80 74.5 78.5 79 78.5 83 Z"/></g>
+      <use href="#bl" transform="rotate(72 70.5 83)"/>
+      <use href="#bl" transform="rotate(144 70.5 83)"/>
+      <use href="#bl" transform="rotate(216 70.5 83)"/>
+      <use href="#bl" transform="rotate(288 70.5 83)"/>
+    </g>
+    <circle cx="70.5" cy="83" r="4.6" fill="#D2DAE3"/>
+    <path d="M34 99 C46 91 58 105 71 98 C82 92 95 96 108 93" fill="none" stroke="#1C7AD4" stroke-width="5.4" stroke-linecap="round"/>
+    <path d="M37 110 C50 102 62 115 76 108 C87 103 98 106 110 103" fill="none" stroke="#5AA7EA" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="150" y="66" font-family="'Sora','Segoe UI',Arial,sans-serif" font-size="40" font-weight="800" fill="#12357C" letter-spacing="0.5">CREATIVE SOLUTIONS</text>
+  <rect x="152" y="82" width="470" height="3" fill="#12357C"/>
+  <text x="153" y="112" font-family="'Segoe UI',Arial,sans-serif" font-size="20.5" font-weight="600" fill="#4B4B4B" letter-spacing="9.7">EQUIPMENT TRADING LLC</text>
+</svg>
