@@ -82,9 +82,9 @@ This repo deploys as a **Cloudflare Worker with static assets**:
 **Custom domain:** the Worker → **Settings → Domains & Routes → Add → `creativesolutionsuae.com`**
 (and `www`). DNS is wired automatically since the zone is on your Cloudflare account.
 
-> Note: Cloudflare limits any single asset to **25 MiB**. The 46 MB Grundfos general catalogue was
-> therefore linked to grundfos.com instead of hosted. To host it yourself, compress it under 25 MB
-> or serve it from **Cloudflare R2**.
+> Note: Cloudflare limits any single asset to **25 MiB**. The Grundfos general catalogue is hosted
+> as a compressed ~9 MB PDF (the original 46 MB version exceeded the limit). Keep any new catalogue
+> PDFs under 25 MB, or serve larger files from **Cloudflare R2**.
 
 ## ✉️ Enable the contact form (Resend)
 
