@@ -68,50 +68,54 @@ npx http-server -p 5173 .
 
 ---
 
-## ✉️ Enable the contact form (IMPORTANT — 2 minutes)
+## ☁️ Cloudflare deploy — frontend + backend (one Worker)
 
-The contact form uses **[Web3Forms](https://web3forms.com)** (free) to deliver enquiries to
-`info@creativesolutionsuae.com`. It is **not active until you add an access key.**
+This repo deploys as a **Cloudflare Worker with static assets**:
+- **Frontend:** all static files, served via the `ASSETS` binding.
+- **Backend:** `worker/index.js` handles `POST /api/contact` (the contact form).
+- Config lives in **`wrangler.jsonc`**; deploy command is `npx wrangler deploy`.
 
-1. Go to <https://web3forms.com> → enter **info@creativesolutionsuae.com** → you'll receive an
-   **Access Key** by email (verify it).
-2. Open **`index.html`**, find this line (inside `#contactForm`):
-   ```html
-   <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
-   ```
-   Replace `YOUR_WEB3FORMS_ACCESS_KEY` with the key you received.
-3. Save & redeploy. Submissions now arrive at `info@creativesolutionsuae.com` (with a nice
-   in-page success toast — no page reload).
+**Deploy (Git-connected):** Cloudflare dashboard → **Workers & Pages → Create → Import a repository**
+→ pick `ecoflowuae/Creative-Solutions-UAE-LLC`. It auto-detects `wrangler.jsonc`; deploy command
+`npx wrangler deploy`. Every `git push` redeploys automatically.
 
-> Prefer a Cloudflare-native option instead of Web3Forms? You can swap the `fetch()` target in
-> `assets/js/main.js` for a Cloudflare Pages Function using Resend/MailChannels. Web3Forms is the
-> quickest path and needs no server code.
+**Custom domain:** the Worker → **Settings → Domains & Routes → Add → `creativesolutionsuae.com`**
+(and `www`). DNS is wired automatically since the zone is on your Cloudflare account.
 
-Also make sure email **receiving** works for the domain — set up **Cloudflare Email Routing**
-(Email → Email Routing) so `info@creativesolutionsuae.com` forwards to your real inbox.
+> Note: Cloudflare limits any single asset to **25 MiB**. The 46 MB Grundfos general catalogue was
+> therefore linked to grundfos.com instead of hosted. To host it yourself, compress it under 25 MB
+> or serve it from **Cloudflare R2**.
 
----
+## ✉️ Enable the contact form (Resend)
 
-## ☁️ Deploy to Cloudflare Pages
+The backend delivers enquiries to `info@creativesolutionsuae.com` via **[Resend](https://resend.com)**.
+Until a key is set, the form politely tells visitors to email directly.
 
-1. Push this folder to the GitHub repo (e.g. `ecoflowuae/Creative-Solutions-UAE-LLC`).
-2. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git** → pick the repo.
-3. Build settings:
-   - **Framework preset:** None
-   - **Build command:** *(leave empty)*
-   - **Build output directory:** `/`  (the repo root — files are already static)
-4. Deploy. Then **Custom domains → Set up a custom domain → `creativesolutionsuae.com`**
-   (Cloudflare adds the DNS records automatically since the zone is on your account).
+1. Create a free Resend account → **verify the domain `creativesolutionsuae.com`** (add the DNS
+   records it gives you — quick, since DNS is on Cloudflare).
+2. Resend → **API Keys → Create** → copy the key.
+3. In the Cloudflare dashboard → your Worker → **Settings → Variables and Secrets**, add:
+   - `RESEND_API_KEY` — **type: Secret** — the key from step 2
+   - `CONTACT_TO` *(optional)* — `info@creativesolutionsuae.com`
+   - `CONTACT_FROM` *(optional)* — `Creative Solutions <noreply@creativesolutionsuae.com>` (must be on the verified domain)
+4. Redeploy. Submissions now email `info@` with a nice in-page success toast.
 
-The included `CNAME` file also makes this repo work on **GitHub Pages** if you ever need a fallback.
+Also set up **Cloudflare Email Routing** (Email → Email Routing) so mail **to** `info@creativesolutionsuae.com`
+forwards into your real inbox.
+
+## 🔎 SEO built in
+
+- Unique `<title>` + meta description, `robots`, and **canonical URL** on every page
+- **Open Graph + Twitter cards** with a branded share image (`assets/img/og-image.png`)
+- **JSON-LD structured data** — `Organization` site-wide, plus `LocalBusiness` + `WebSite` on the home page
+- `sitemap.xml` + `robots.txt` (update the sitemap if you add pages)
 
 ---
 
 ## 🎨 Branding
 
-- **Logo:** `assets/logo-mark.svg` (icon) and `assets/logo-full.svg` (horizontal lockup). Both are
-  scalable vectors — swap them any time. To use your own logo, replace these files (keep the names)
-  or update the `<img class="brand-mark">` references.
+- **Logo:** `assets/img/logo.png` (full lockup, transparent) and `assets/img/logo-icon.png` (icon),
+  plus `assets/img/favicon.png`. Swap these files to update the logo everywhere.
 - **Colours** live as CSS variables at the top of `assets/css/styles.css`
   (`--brand`, `--aqua`, `--ink`, …) — change them in one place to re-theme the whole site.
 

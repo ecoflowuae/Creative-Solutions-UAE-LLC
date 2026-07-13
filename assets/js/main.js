@@ -110,31 +110,22 @@
       e.preventDefault();
       const btn = form.querySelector("button[type=submit]");
       const original = btn.innerHTML;
-      const key = form.querySelector("[name=access_key]").value;
-
-      if (!key || key.includes("YOUR_")) {
-        showToast(
-          "error",
-          "Form not configured",
-          "Add your Web3Forms access key to enable email delivery."
-        );
-        return;
-      }
+      const payload = Object.fromEntries(new FormData(form).entries());
 
       btn.disabled = true;
       btn.innerHTML = "Sending…";
       try {
-        const res = await fetch("https://api.web3forms.com/submit", {
+        const res = await fetch(form.getAttribute("action") || "/api/contact", {
           method: "POST",
-          headers: { Accept: "application/json" },
-          body: new FormData(form),
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
         });
-        const data = await res.json();
-        if (data.success) {
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
           form.reset();
           showToast("success", "Message sent", "Thank you — our team will reply to you shortly.");
         } else {
-          showToast("error", "Could not send", data.message || "Please try again or email us directly.");
+          showToast("error", "Could not send", data.message || "Please try again, or email info@creativesolutionsuae.com.");
         }
       } catch (err) {
         showToast("error", "Network error", "Please check your connection and try again.");
